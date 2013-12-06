@@ -1,0 +1,18 @@
+build:
+
+default:
+  - 'test'
+
+dependencies:
+  - 'clean:pmd'
+  - 'curl:pmd'
+  - 'curl:commonsio'
+  - 'exec:unzip'
+  - 'exec:patchpmd'
+  - 'curl:pmdjs'
+
+dev:
+
+test:
+  - 'jshint'
+  - 'nodeunit'

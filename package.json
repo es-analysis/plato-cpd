@@ -4,7 +4,11 @@
   "description": "Copy Paste Detector reporter for Plato",
   "main": "reporter/index.js",
   "dependencies": {
-    "jshint": "~2.3.0"
+    "jshint": "~2.3.0",
+    "grunt-exec": "~0.4.2",
+    "grunt-curl": "~1.2.1",
+    "grunt-zip": "~0.10.0",
+    "grunt-clean": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
@@ -14,12 +18,13 @@
     "q": "~0.9.7"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "postinstall": "grunt dependencies --force"
   },
   "author": {
-    "name" : "Craig Davis",
-    "email" : "craig@there4development.com",
-    "url" : "http://there4development.com"
+    "name": "Craig Davis",
+    "email": "craig@there4development.com",
+    "url": "http://there4development.com"
   },
   "license": "MIT"
 }

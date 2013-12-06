@@ -3,12 +3,14 @@
 var path = require('path');
 
 module.exports = function(grunt) {
-  require('load-grunt-config')(grunt, {
-    configPath: path.join(process.cwd(), '.grunt', 'config'),
-    loadGruntTasks: {
-      pattern: 'grunt-*',
-      config: require('./package.json'),
-      scope: 'devDependencies'
-    }
+  var config = require('load-grunt-config')(grunt, {
+    configPath: path.join(__dirname, '.grunt', 'config'),
+    config: {
+      env: process.env,
+      projectRoot: __dirname
+    },
+    init: false
   });
+  //grunt.loadTasks('.grunt/custom');
+  grunt.initConfig(config);
 };
