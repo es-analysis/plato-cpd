@@ -1,0 +1,10 @@
+build:
+
+default:
+  - 'test'
+
+dev:
+
+test:
+  - 'jshint'
+  - 'nodeunit'
