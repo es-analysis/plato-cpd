@@ -21,14 +21,14 @@ deferred.promise.then(function () {
     options : {}
   }, q.defer());
 
-  // reporter.process({
-  //   file : 'test/fixture/b.js',
-  //   options : {}
-  // }, q.defer());
+  reporter.process({
+    file : 'test/fixture/b.js',
+    options : {}
+  }, q.defer());
 
-  // reporter.process({
-  //   file : 'test/fixture/c.js',
-  //   options : {}
-  // }, q.defer());
+  reporter.process({
+    file : 'test/fixture/c.js',
+    options : {}
+  }, q.defer());
   reporter.aggregate({}, deferred);
 });
