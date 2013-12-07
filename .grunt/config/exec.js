@@ -12,5 +12,10 @@ module.exports = {
     cmd: 'reporter_tools/pmd-bin-5.0.5/bin/run.sh cpd  --minimum-tokens 10 --files ./test/fixture --language ecmascript --format csv',
     cwd: '.',
     exitCode: 4
+  },
+  fixturecsv: {
+    cmd: 'reporter_tools/pmd-bin-5.0.5/bin/run.sh cpd  --minimum-tokens 10 --files ./test/fixture --language ecmascript --format csv > test/fixture/sample.csv',
+    cwd: '.',
+    exitCode: 4
   }
 };

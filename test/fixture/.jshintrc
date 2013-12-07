@@ -1,0 +1,14 @@
+{
+  "curly": false,
+  "eqeqeq": false,
+  "immed": false,
+  "latedef": false,
+  "newcap": false,
+  "noarg": false,
+  "sub": false,
+  "undef": false,
+  "unused": false,
+  "boss": false,
+  "eqnull": true,
+  "node": false
+}
