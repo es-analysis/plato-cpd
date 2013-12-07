@@ -25,19 +25,12 @@ var reporter = require('../reporter');
  */
 
 exports['plato-cpd'] = {
-  setUp: function(done) {
-    done();
-  },
   'test runner' : function(test) {
-    test.expect(1);
 
     var deferred = q.defer();
 
-    reporter.setup({}, q.defer());
-
     reporter.process({
-      file : 'file.js',
-      source : 'var a = 2; b = 3',
+      file : 'test/fixture/a.js',
       options : {}
     }, deferred);
 

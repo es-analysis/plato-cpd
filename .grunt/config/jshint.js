@@ -1,14 +1,11 @@
 module.exports = {
   options: {
-    jshintrc: '.jshintrc'
+    jshintrc: true
   },
   gruntfile: {
     src: 'Gruntfile.js'
   },
   reporter: {
     src: ['reporter/**/*.js']
-  },
-  components: {
-    src: ['components/**/*.js']
   }
 };
