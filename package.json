@@ -6,6 +6,9 @@
   "pmdbin": "reporter_tools/pmd-bin-5.0.5/bin/run.sh",
   "dependencies": {
     "jshint": "~2.3.0",
+    "q": "~0.9.7",
+    "grunt": "~0.4.2",
+    "load-grunt-config": "~0.7.0",
     "grunt-exec": "~0.4.2",
     "grunt-curl": "~1.2.1",
     "grunt-zip": "~0.10.0",
@@ -15,11 +18,8 @@
     "csvrow": "~0.1.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "load-grunt-config": "~0.7.0",
     "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-nodeunit": "~0.2.2",
-    "q": "~0.9.7"
+    "grunt-contrib-nodeunit": "~0.2.2"
   },
   "scripts": {
     "test": "grunt test",
