@@ -1,7 +1,7 @@
 'use strict';
 var _        = require('lodash'),
     q        = require('q'),
-    csv      = require('./csv_parser'),
+    csv      = require('../lib/csv_parser'),
     path     = require('path'),
     exec     = require('child_process').exec,
     packageConfig = require('../package'),
@@ -45,12 +45,8 @@ exports.setup = function(config, deferred) {
 // Run for each file and search for it in the pmdWarnings report
 exports.process = function(options, deferred) {
   var report, processFilename = options.file, warnings = [];
-  _.each(pmdWarnings, function (warning) {
-    var fileList = _.pluck(warning.files, 'filename');
-    if (fileList.join(',').indexOf(processFilename)) {
-      warnings.push(warning);
-    }
-  });
+
+  warnings = findFileInReport(pmdWarnings, processFilename);
 
   try {
     report = generateReport(warnings);
@@ -58,7 +54,7 @@ exports.process = function(options, deferred) {
     deferred.reject(e);
   }
 
-  reports.summary[options.file] = {
+  reports.summary[processFilename] = {
     messages : report.messages.length
   };
 
@@ -82,12 +78,25 @@ function findRootDir(files) {
   return path.dirname(rootDir);
 }
 
-function generateReport(warnings) {
+function findFileInReport(warnings, filename) {
+  return _.find(warnings, function (warning, warningFilename) {
+    return _.str.include(warningFilename, filename);
+  });
+}
+
+function generateReport(data) {
   var out = {
     messages : []
   };
 
-  console.log(warnings);
+  data.forEach(function (result) {
+    out.messages.push({
+      severity : 'warning',
+      line     : result.from,
+      column   : 0,
+      message  : result.message
+    });
+  });
 
   return out;
 }

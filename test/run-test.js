@@ -29,22 +29,37 @@ exports['plato-cpd'] = {
 
     var deferred = q.defer();
 
-    reporter.process({
-      file : 'test/fixture/a.js',
-      options : {}
+    reporter.setup({
+      title: 'Plato Report Title',
+      output: 'reports',
+      files: [
+        'test/fixture/a.js',
+        'test/fixture/b.js',
+        'test/fixture/c.js',
+      ],
+      reports: {}
     }, deferred);
 
-    deferred.promise.then(
-      function (report) {
-        test.ok(report.length);
-        test.ok(true, 'Positive test');
-        test.done();
-      },
-      function(){
-        test.ok(false, 'Negative test');
-        test.done();
-      }
-    );
+    deferred.promise.then(function () {
+      var reportDfd = q.defer();
+
+      reporter.process({
+        file : 'test/fixture/a.js',
+        options : {}
+      }, reportDfd);
+
+      reportDfd.promise.then(
+        function (report) {
+          test.ok(report.messages.length);
+          test.ok(true, 'Positive test');
+          test.done();
+        },
+        function(){
+          test.ok(false, 'Negative test');
+          test.done();
+        }
+      );
+    });
 
   }
 };

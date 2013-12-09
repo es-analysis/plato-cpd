@@ -13,6 +13,9 @@ dependencies:
 
 dev:
 
+lint:
+  - 'jshint'
+
 test:
   - 'jshint'
   - 'nodeunit'
