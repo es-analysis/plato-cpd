@@ -1,3 +1,4 @@
+
 'use strict';
 var _        = require('lodash'),
     q        = require('q'),
@@ -13,8 +14,11 @@ _.mixin(_.str.exports());
 // `pmd` can only process a folder. We find the common root and run the analysis
 // on all the files. During the processing for each file, we'll only report on
 // the files we need by pulling the cpd data from the parsed csv.
-exports.setup = function(config, deferred) {
-  var pmdCommand, reportOutput = {}, pmdDeferred = q.defer();
+exports.setup = function(config) {
+  var pmdCommand,
+      reportOutput = {},
+      deferred = q.defer(),
+      pmdDeferred = q.defer();
 
   reports = {
     total   : {},
@@ -40,34 +44,34 @@ exports.setup = function(config, deferred) {
     pmdWarnings = csv.process(reportOutput.stdout);
     deferred.resolve();
   });
+
+  return deferred.promise;
 };
 
 // Run for each file and search for it in the pmdWarnings report
-exports.process = function(options, deferred) {
-  var report, processFilename = options.file, warnings = [];
+exports.process = function(options) {
+  var report, processFilename = options.filename, warnings = [];
 
   warnings = findFileInReport(pmdWarnings, processFilename);
-
-  try {
-    report = generateReport(warnings);
-  } catch(e) {
-    deferred.reject(e);
-  }
+  report = generateReport(warnings);
 
   reports.summary[processFilename] = {
     messages : report.messages.length
   };
-
-  deferred.resolve(report);
+  return {
+    detail  : report,
+    summary : {
+      messages : report.messages.length
+    }
+  };
 };
 
-exports.teardown = function(config, deferred) {
+exports.teardown = function() {
   reports = undefined;
-  deferred.resolve();
 };
 
-exports.aggregate = function(options, deferred) {
-  deferred.resolve(reports);
+exports.aggregate = function() {
+  return reports;
 };
 
 function findRootDir(files) {
@@ -89,14 +93,16 @@ function generateReport(data) {
     messages : []
   };
 
-  data.forEach(function (result) {
-    out.messages.push({
-      severity : 'warning',
-      line     : result.from,
-      column   : 0,
-      message  : result.message
+  if (data && data.length) {
+    data.forEach(function (result) {
+      out.messages.push({
+        severity : 'warning',
+        line     : result.from,
+        column   : 0,
+        message  : result.message
+      });
     });
-  });
+  }
 
   return out;
 }

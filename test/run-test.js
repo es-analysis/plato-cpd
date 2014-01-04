@@ -1,7 +1,5 @@
 'use strict';
 
-var q = require('q');
-
 var reporter = require('../reporter');
 
 /*
@@ -26,9 +24,6 @@ var reporter = require('../reporter');
 
 exports['plato-cpd'] = {
   'test runner' : function(test) {
-
-    var deferred = q.defer();
-
     reporter.setup({
       title: 'Plato Report Title',
       output: 'reports',
@@ -38,28 +33,17 @@ exports['plato-cpd'] = {
         'test/fixture/c.js',
       ],
       reports: {}
-    }, deferred);
-
-    deferred.promise.then(function () {
-      var reportDfd = q.defer();
-
-      reporter.process({
+    }).then(function () {
+      var report = reporter.process({
         file : 'test/fixture/a.js',
         options : {}
-      }, reportDfd);
-
-      reportDfd.promise.then(
-        function (report) {
-          test.ok(report.messages.length);
-          test.ok(true, 'Positive test');
-          test.done();
-        },
-        function(){
-          test.ok(false, 'Negative test');
-          test.done();
-        }
-      );
+      });
+      test.ok(report.messages.length);
+      test.ok(true, 'Positive test');
+      test.done();
+    }).fail(function () {
+      test.ok(false, "Setup Failed");
+      test.done();
     });
-
   }
 };

@@ -1,8 +1,7 @@
 'use strict';
 
-var q = require('q'),
-    reporter = require('./reporter'),
-    deferred = q.defer();
+var reporter = require('./reporter'),
+    report;
 
 reporter.setup({
   title: 'Plato Report Title',
@@ -13,22 +12,22 @@ reporter.setup({
     'test/fixture/c.js',
   ],
   reports: {}
-}, deferred);
-
-deferred.promise.then(function () {
+}).then(function () {
   reporter.process({
     file : 'test/fixture/a.js',
     options : {}
-  }, q.defer());
+  });
 
   reporter.process({
     file : 'test/fixture/b.js',
     options : {}
-  }, q.defer());
+  });
 
   reporter.process({
     file : 'test/fixture/c.js',
     options : {}
-  }, q.defer());
-  reporter.aggregate({}, deferred);
+  });
+
+  report = reporter.aggregate({});
+  console.log(report);
 });
